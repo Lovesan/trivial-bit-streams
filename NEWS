@@ -1,3 +1,7 @@
+v0.1.2
+    * WITH-OUTPUT-BIT-STREAM was renamed to WITH-BIT-OUTPUT-STREAM, and
+        WITH-INPUT-BIT-STREAM was renamed to WITH-BIT-INPUT-STREAM
+
 v0.1.1
     * Removed BIT-STREAM-ERROR-BIT-STREAM symbol from the package.
         Use CL:STREAM-ERROR-STREAM function to obtain bit-stream-error's stream

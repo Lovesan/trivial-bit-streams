@@ -55,5 +55,5 @@
     #:make-stream-input-callback
     #:make-eof-input-callback
     #:make-blackhole-output-callback
-    #:with-input-bit-stream
-    #:with-output-bit-stream))
+    #:with-bit-input-stream
+    #:with-bit-output-stream))

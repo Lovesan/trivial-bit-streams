@@ -476,7 +476,7 @@ invalidating current contents of the stream's buffer."
     (declare (ignore args))
     (values)))
 
-(defmacro with-input-bit-stream
+(defmacro with-bit-input-stream
     ((var &key (callback
                  '(make-eof-input-callback))
                (buffer-size
@@ -490,7 +490,7 @@ invalidating current contents of the stream's buffer."
          (progn ,@body)
        (close ,var))))
 
-(defmacro with-output-bit-stream
+(defmacro with-bit-output-stream
     ((var &key (callback
                  '(make-blackhole-output-callback))
                (buffer-size
