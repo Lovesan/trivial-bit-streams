@@ -1,2 +1,6 @@
+v0.1.1
+    * Removed BIT-STREAM-ERROR-BIT-STREAM symbol from the package.
+        Use CL:STREAM-ERROR-STREAM function to obtain bit-stream-error's stream
+
 v0.1.0
     * Initial release

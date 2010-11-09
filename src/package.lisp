@@ -32,7 +32,6 @@
     #:*default-bit-input-stream-buffer-size*
     #:*bit-stream-bit-io*
     #:bit-stream-error
-    #:bit-stream-error-bit-stream
     #:bit-stream-closed-error
     #:bit-stream-end-of-file
     #:bit-stream-buffer-overflow

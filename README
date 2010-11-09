@@ -1,4 +1,5 @@
-Trivial-bit-streams is a library that implements flexible buffered bit streams.
+Trivial-bit-streams is a library which implements flexible
+buffered bit streams.
 
 Input into INPUT-BIT-STREAM's buffer and output from OUTPUT-BIT-STREAM's one
 is managed through callbacks, so you can easily wrap bit streams around any

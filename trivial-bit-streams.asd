@@ -23,7 +23,7 @@
 ;;; DEALINGS IN THE SOFTWARE.
 
 (defsystem #:trivial-bit-streams
-  :version "0.1.0"
+  :version "0.1.1"
   :description "Trivial bit streams"
   :author "Dmitry Ignatiev <lovesan.ru@gmail.com>"
   :maintainer "Dmitry Ignatiev <lovesan.ru@gmail.com>"
