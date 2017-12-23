@@ -1,0 +1,18 @@
+* Trivial-Bit-Streams2
+
+** Usage
+
+** Installation
+
+** Author
+
++ Dmitry Ignatiev (lovesan.ru@gmail.com)
++ README by Christopher Eames (Chream) <chream-gmx.com>
+
+** Copyright
+
+Copyright (c) 2017 Dmitry Ignatiev (lovesan.ru@gmail.com)
+
+** License
+
+Licensed under the MIT License.
