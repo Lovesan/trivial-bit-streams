@@ -1,6 +1,6 @@
 ;;;; -*- Mode: lisp; indent-tabs-mode: nil -*-
 
-;;; Copyright (C) 2010, Dmitry Ignatiev <lovesan.ru@gmail.com>
+;;; Copyright (C) 2010-2019, Dmitry Ignatiev <lovesan.ru@gmail.com>
 
 ;;; Permission is hereby granted, free of charge, to any person
 ;;; obtaining a copy of this software and associated documentation
@@ -193,6 +193,32 @@ starting from the least significant bit of the supplied integer."
               (incf ibyte bytes-to-add)
               (incf byte-counter bytes-to-add)
               (ensure-output bit-stream-core callback))))))
+
+(defun pad-to-byte-alignment (bit bit-stream)
+  (declare (type bit-output-stream bit-stream)
+           (type bit bit))
+  "Pad the output stream with BITs to reach the byte alignment. Returns
+written bits."
+  (unless (open-stream-p bit-stream)
+    (error 'bit-stream-closed-error :stream bit-stream))
+  (let ((bit-stream-core (slot-value bit-stream 'core)))
+    (declare (type bit-output-stream-core bit-stream-core))
+    (with-accessors ((ibit bit-stream-core-ibit)
+                     (ibyte bit-stream-core-ibyte)
+                     (byte-counter bit-stream-core-byte-counter)
+                     (buffer bit-stream-core-buffer))
+        bit-stream-core
+      (if (zerop ibit) (return-from pad-to-byte-alignment 0))
+      (let* ((bits-to-write (- 8 ibit))
+             (bits (max 0 (1- (ash bit bits-to-write)))))
+        (setf (aref buffer ibyte)
+              (dpb bits
+                   (byte bits-to-write ibit)
+                   (ldb (byte ibit 0) (aref buffer ibyte))))
+        (incf byte-counter)
+        (inc-bit-counter bit-stream-core bits-to-write)
+        (ensure-output bit-stream-core (bit-stream-callback bit-stream))
+        bits))))
 
 (defun flush-bit-output-stream (bit-stream)
   (declare (type bit-output-stream bit-stream))
@@ -455,6 +481,32 @@ invalidating current contents of the stream's buffer."
         :for b = (read-octet stream nil nil)
         :while b :do (setf (elt sequence i) b)
         :finally (return count)))))
+
+(defun read-to-byte-alignment (bit-stream &optional (eof-error-p T) eof-value)
+  (declare (type bit-input-stream bit-stream))
+  "Retrieves bits needed to reach byte alignment from the input stream.
+May read 0 to 7 bits."
+  (unless (open-stream-p bit-stream)
+    (error 'bit-stream-closed-error :stream bit-stream))
+  (let ((bit-stream-core (slot-value bit-stream 'core)))
+    (declare (type bit-input-stream-core bit-stream-core))
+    (with-accessors ((ibit bit-stream-core-ibit)
+                     (ibyte bit-stream-core-ibyte)
+                     (byte-counter bit-stream-core-byte-counter)
+                     (buffer bit-stream-core-buffer))
+        bit-stream-core
+
+      (if (zerop ibit)
+          (return-from read-to-byte-alignment 0)
+          (unless (ensure-input bit-stream-core bit-stream)
+            (if eof-error-p
+                (error 'bit-stream-end-of-file :stream bit-stream)
+                (return-from read-to-byte-alignment eof-value))))
+      (let ((size (- 8 ibit)))
+        (prog1 (ldb (byte size ibit)
+                    (aref buffer ibyte))
+          (inc-bit-counter bit-stream-core size)
+          (incf byte-counter))))))
 
 (defun make-stream-output-callback (stream)
   (declare (type stream stream))

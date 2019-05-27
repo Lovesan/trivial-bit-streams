@@ -45,11 +45,13 @@
     #:write-bits
     #:write-octet
     #:write-octet-vector
+    #:pad-to-byte-alignment
     #:flush-bit-output-stream
     #:read-bit
     #:read-bits
     #:read-octet
     #:read-octet-vector
+    #:read-to-byte-alignment
     #:flush-bit-input-stream
     #:make-stream-output-callback
     #:make-stream-input-callback
