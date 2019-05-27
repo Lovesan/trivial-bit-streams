@@ -1,6 +1,6 @@
 ;;;; -*- Mode: lisp; indent-tabs-mode: nil -*-
 
-;;; Copyright (C) 2010, Dmitry Ignatiev <lovesan.ru@gmail.com>
+;;; Copyright (C) 2010-2019, Dmitry Ignatiev <lovesan.ru@gmail.com>
 
 ;;; Permission is hereby granted, free of charge, to any person
 ;;; obtaining a copy of this software and associated documentation
@@ -22,22 +22,7 @@
 ;;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;;; DEALINGS IN THE SOFTWARE.
 
-(defsystem #:trivial-bit-streams
-  :version "0.1.2"
-  :description "Trivial bit streams"
-  :author "Dmitry Ignatiev <lovesan.ru@gmail.com>"
-  :maintainer "Dmitry Ignatiev <lovesan.ru@gmail.com>"
-  :licence "MIT"
-  :depends-on (#:trivial-gray-streams)
-  :components ((:module "src"
-                    :serial t
-                    :components ((:file "package")
-                                 (:file "classes")
-                                 (:file "methods"))))
-  :perform (test-op (op system)
-                    (declare (ignore op system))
-                    (asdf:load-system :trivial-bit-streams-tests)
-                    (funcall
-                     (intern "RUN-TESTS" (find-package "TBS-TESTS")))))
-
-;; vim: ft=lisp et
+(defpackage #:trivial-bit-streams-tests
+  (:use #:cl #:fiveam #:trivial-bit-streams)
+  (:nicknames #:tbs-tests #:trivial-bs-tests)
+  (:export #:run-tests))
