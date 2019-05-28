@@ -33,6 +33,11 @@
                     :serial t
                     :components ((:file "package")
                                  (:file "classes")
-                                 (:file "methods")))))
+                                 (:file "methods"))))
+  :perform (test-op (op system)
+                    (declare (ignore op system))
+                    (asdf:load-system :trivial-bit-streams-tests)
+                    (funcall
+                     (intern "RUN-TESTS" (find-package "TBS-TESTS")))))
 
 ;; vim: ft=lisp et

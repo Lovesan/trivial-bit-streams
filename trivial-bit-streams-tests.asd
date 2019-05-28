@@ -1,6 +1,6 @@
 ;;;; -*- Mode: lisp; indent-tabs-mode: nil -*-
 
-;;; Copyright (C) 2010, Dmitry Ignatiev <lovesan.ru@gmail.com>
+;;; Copyright (C) 2010-2019, Dmitry Ignatiev <lovesan.ru@gmail.com>
 
 ;;; Permission is hereby granted, free of charge, to any person
 ;;; obtaining a copy of this software and associated documentation
@@ -22,40 +22,16 @@
 ;;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;;; DEALINGS IN THE SOFTWARE.
 
-(in-package #:cl-user)
+(defsystem #:trivial-bit-streams-tests
+  :version "0.1.2"
+  :description "Trivial bit streams"
+  :author "Dmitry Ignatiev <lovesan.ru@gmail.com>, Vasily Postnicov <shamaz.mazum@gmail.com>"
+  :maintainer "Dmitry Ignatiev <lovesan.ru@gmail.com>"
+  :licence "MIT"
+  :components ((:module "tests"
+                    :serial t
+                    :components ((:file "package")
+                                 (:file "tests"))))
+  :depends-on (#:trivial-bit-streams #:fiveam #:flexi-streams))
 
-(defpackage #:trivial-bit-streams
-  (:use #:cl #:trivial-gray-streams)
-  (:nicknames #:tbs #:trivial-bs)
-  (:export
-    #:*default-bit-output-stream-buffer-size*
-    #:*default-bit-input-stream-buffer-size*
-    #:*bit-stream-bit-io*
-    #:bit-stream-error
-    #:bit-stream-closed-error
-    #:bit-stream-end-of-file
-    #:bit-stream-buffer-overflow
-    #:bit-stream-buffer-overflow-index
-    #:bit-stream-buffer-overflow-buffer-size
-    #:bit-stream
-    #:bit-output-stream
-    #:bit-input-stream
-    #:bit-stream-byte-counter
-    #:write-bit
-    #:write-bits
-    #:write-octet
-    #:write-octet-vector
-    #:pad-to-byte-alignment
-    #:flush-bit-output-stream
-    #:read-bit
-    #:read-bits
-    #:read-octet
-    #:read-octet-vector
-    #:read-to-byte-alignment
-    #:flush-bit-input-stream
-    #:make-stream-output-callback
-    #:make-stream-input-callback
-    #:make-eof-input-callback
-    #:make-blackhole-output-callback
-    #:with-bit-input-stream
-    #:with-bit-output-stream))
+;; vim: ft=lisp et
